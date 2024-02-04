@@ -62,7 +62,7 @@ export const  HomeScreenHeader = ({value, searchLocationKey, setSearchLocationKe
               fontFamily: 'Montserrat-Medium',
             }}
             className="text-white ">
-            Aqui Está Tudo!
+            Tudo, no CidAds!
           </Animated.Text>
         </View>
         <View className="flex flex-row justify-around pt-8 pb-2 gap-5 items-end ">

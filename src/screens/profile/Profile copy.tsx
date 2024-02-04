@@ -97,7 +97,6 @@ const ProfileScreen = () => {
   const inputRef = useRef<TextInput | null>(null);
   const [emailOrPhoneNumber, setEmailOrPhoneNumber] = useState('');
   const navigation = useNavigation<NavigationProps>();
-  const scrollOffsetY = useRef(new RNAnimated.Value(0)).current;
 
   const clearInputText = () => {
     setEmailOrPhoneNumber('');
@@ -109,6 +108,192 @@ const ProfileScreen = () => {
   };
 
   return (
+    // <AnimatedScrollView
+    //   HeaderNavbarComponent={<HeaderNavBar />}
+    //   TopNavBarComponent={<TopNavBar />}
+    //   // headerImage={require('../../assets/images/google.png')}
+    //   topBarHeight={55}
+    //   headerMaxHeight={120}
+    //     showsVerticalScrollIndicator={false}
+    //     keyboardShouldPersistTaps="always"
+    //     entering={SlideInDown.duration(300)}
+    //     contentContainerStyle={{
+    //       // flex: 1,
+    //       justifyContent: 'center',
+
+    //       // minHeight: '100%',
+    //       margin: 15,
+    //     }}>
+    //   <View
+    //     style={{
+    //       alignItems: 'center',
+    //     }}>
+    //     <View
+    //       style={{
+    //         width: '100%',
+    //         gap: 30,
+    //       }}>
+    //       <TextInput
+    //         ref={inputRef}
+    //         onChangeText={text => setEmailOrPhoneNumber(text)}
+    //         value={emailOrPhoneNumber}
+    //         className="border border-gray-400 shadow-md text-black text-[40px]"
+    //         style={{
+    //           fontSize: emailOrPhoneNumber ? 18 : 14,
+    //           fontWeight: emailOrPhoneNumber ? '600' : 'normal',
+    //           borderRadius: 8,
+    //           paddingHorizontal: 10,
+    //           // width: "100%"
+    //         }}
+    //         placeholderTextColor={'gray'}
+    //         placeholder="Número de Telefone ou Endereço Electrónico"
+    //       />
+    //       {!!emailOrPhoneNumber && (
+    //         <Pressable
+    //           onPress={clearInputText}
+    //           style={{
+    //             position: 'absolute',
+    //             right: 10,
+    //             top: 15,
+    //             borderRadius: 50,
+    //             backgroundColor: COLORS.lightgrey,
+    //           }}>
+    //           <Icon name="clear" color={COLORS.lightslategrey} size={18} />
+    //         </Pressable>
+    //       )}
+    //       <TouchableOpacity
+    //         onPress={handleUserLogIn}
+    //         className="bg-[#2167ff] rounded-full w-full h-12 items-center justify-center">
+    //         <Text className="text-[16px] text-white font-montserratBold">
+    //           Entrar
+    //         </Text>
+    //       </TouchableOpacity>
+    //     </View>
+
+    //     <Pressable className="mt-4">
+    //       <Text className="text-[12px] font-ralewayRegular text-gray-500">
+    //         Esqueceu as Credenciais?
+    //       </Text>
+    //     </Pressable>
+
+    //     <View
+    //       style={{
+    //         flexDirection: 'row',
+    //         justifyContent: 'center',
+    //         alignItems: 'center',
+    //         gap: 10,
+    //         paddingVertical: 15,
+    //       }}>
+    //       <View className="w-[40%] bg-gray-300 h-[1px]" />
+    //       <Text className="text-[16px] font-montserratBold text-gray-500">
+    //         OU
+    //       </Text>
+    //       <View className="w-[40%] bg-gray-300 h-[1px]" />
+    //     </View>
+
+    //     <TouchableOpacity className="flex flex-row justify-start pl-12 border-0.5 rounded-full w-full h-12 items-center mb-4">
+    //       <Image
+    //         source={require('../../assets/images/google.png')}
+    //         style={{
+    //           width: 30,
+    //           height: 30,
+    //           resizeMode: 'cover',
+    //         }}
+    //       />
+    //       <Text className="ml-4">Continuar com Google</Text>
+    //     </TouchableOpacity>
+
+    //     <TouchableOpacity className="flex flex-row justify-start pl-12 border-0.5 rounded-full w-full h-12 items-center mb-4">
+    //       <Image
+    //         source={require('../../assets/images/facebook.png')}
+    //         style={{
+    //           width: 30,
+    //           height: 30,
+    //           resizeMode: 'cover',
+    //         }}
+    //       />
+    //       <Text className="ml-4">Continuar com Facebook</Text>
+    //     </TouchableOpacity>
+
+    //     <TouchableOpacity className="flex flex-row justify-start pl-12 border-0.5 rounded-full w-full h-12 items-center mb-4">
+    //       <Image
+    //         source={require('../../assets/images/twitterX.png')}
+    //         style={{
+    //           width: 30,
+    //           height: 30,
+    //           resizeMode: 'cover',
+    //         }}
+    //       />
+    //       <Text className="ml-4">Continuar com X</Text>
+    //     </TouchableOpacity>
+    //   </View>
+    //   <View>
+    //     <Text className="text-center text-[12px] font-ralewayRegular text-gray-900">
+    //       Ao continuar, o utilizador concorda com os nossos{' '}
+    //       <Text
+    //         onPress={() => navigation.navigate('TermsOfUse')}
+    //         className="text-center text-[12px] text-[#2167ff] font-ralewayBold">
+    //         Termos de Utilização
+    //       </Text>
+    //       <Text className="text-center text-[12px]"> e </Text>
+    //       <Text
+    //         onPress={() => navigation.navigate('PolicyAndPrivacy')}
+    //         className="text-center text-[12px] text-[#2167ff] font-ralewayBold">
+    //         Política de Privacidade
+    //       </Text>
+    //     </Text>
+    //   </View>
+
+    //   <View>
+    //     <Text className="text-center text-[12px] font-ralewayRegular text-gray-900">
+    //       Ao continuar, o utilizador concorda com os nossos{' '}
+    //       <Text
+    //         onPress={() => navigation.navigate('TermsOfUse')}
+    //         className="text-center text-[12px] text-[#2167ff] font-ralewayBold">
+    //         Termos de Utilização
+    //       </Text>
+    //       <Text className="text-center text-[12px]"> e </Text>
+    //       <Text
+    //         onPress={() => navigation.navigate('PolicyAndPrivacy')}
+    //         className="text-center text-[12px] text-[#2167ff] font-ralewayBold">
+    //         Política de Privacidade
+    //       </Text>
+    //     </Text>
+    //   </View>
+    //   <View>
+    //     <Text className="text-center text-[12px] font-ralewayRegular text-gray-900">
+    //       Ao continuar, o utilizador concorda com os nossos{' '}
+    //       <Text
+    //         onPress={() => navigation.navigate('TermsOfUse')}
+    //         className="text-center text-[12px] text-[#2167ff] font-ralewayBold">
+    //         Termos de Utilização
+    //       </Text>
+    //       <Text className="text-center text-[12px]"> e </Text>
+    //       <Text
+    //         onPress={() => navigation.navigate('PolicyAndPrivacy')}
+    //         className="text-center text-[12px] text-[#2167ff] font-ralewayBold">
+    //         Política de Privacidade
+    //       </Text>
+    //     </Text>
+    //   </View>
+    //   <View>
+    //     <Text className="text-center text-[12px] font-ralewayRegular text-gray-900">
+    //       Ao continuar, o utilizador concorda com os nossos{' '}
+    //       <Text
+    //         onPress={() => navigation.navigate('TermsOfUse')}
+    //         className="text-center text-[12px] text-[#2167ff] font-ralewayBold">
+    //         Termos de Utilização
+    //       </Text>
+    //       <Text className="text-center text-[12px]"> e </Text>
+    //       <Text
+    //         onPress={() => navigation.navigate('PolicyAndPrivacy')}
+    //         className="text-center text-[12px] text-[#2167ff] font-ralewayBold">
+    //         Política de Privacidade
+    //       </Text>
+    //     </Text>
+    //   </View>
+     
+    </AnimatedScrollView>
     <KeyboardAvoidingView
       style={{
         flex: 1,
@@ -117,11 +302,10 @@ const ProfileScreen = () => {
 
       <RNAnimated.View
         style={{
-          // height: 55,
+          height: animatedHeaderheight,
           backgroundColor: '#2167ff',
           borderBottomRightRadius: 10,
           borderBottomLeftRadius: 10,
-          paddingBottom: 10,
         }}>
         <Pressable
           onPress={() => navigation.goBack()}
