@@ -1,4 +1,5 @@
 {
   "name": "jijiapp",
-  "displayName": "jijiapp"
+  "displayName": "jijiapp",
+  "$schema": "com.tecmoza"
 }

@@ -11,87 +11,17 @@ import {
   Animated as RNAnimated,
 } from 'react-native';
 import React, {useRef, useState} from 'react';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faClose} from '@fortawesome/free-solid-svg-icons';
 import {useNavigation} from '@react-navigation/native';
 import {Icon} from '@rneui/base';
 import Animated, {SlideInDown} from 'react-native-reanimated';
 import {COLORS} from '../../assets/colors';
-import {AnimatedScrollView} from '@kanelloc/react-native-animated-header-scroll-view';
+import { TermsAndPolicies } from '../../components/terms-and-policies';
+import { NavigationProps } from '../../assets/types/global-types';
+import { HeaderWithAuthBrand } from '../../components/header-with-auth-brand';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { CustomTextInput } from '../../components/custom-text-input';
+import { MainButton } from '../../components/buttons';
 
-type NavigationProps = {
-  [x: string]: any;
-  name: string;
-  merge?: boolean;
-  params?: {};
-};
-
-const Header_Max_Height = 150;
-const Header_Min_Height = 30;
-const Scroll_Distance = Header_Max_Height - Header_Min_Height;
-
-const HeaderNavBar = ({}) => {
-  const navigation = useNavigation();
-  return (
-    <RNAnimated.View
-      style={{
-        minHeight: 90,
-        backgroundColor: '#2167ff',
-        borderBottomRightRadius: 10,
-        borderBottomLeftRadius: 10,
-        width: '100%',
-        paddingBottom: 10,
-      }}>
-      <Pressable
-        onPress={() => navigation.goBack()}
-        style={{
-          // height: 55,
-          marginTop: StatusBar.currentHeight,
-          marginHorizontal: 10,
-
-          justifyContent: 'center',
-          // alignItems: "center",
-        }}>
-        <FontAwesomeIcon icon={faClose} size={25} color="white" />
-      </Pressable>
-      {
-        <View className="items-center justify-center">
-          <Text className="text-2xl text-white font-montserratBold">
-            CidAds
-          </Text>
-          <View className="flex flex-row items-center justify-center w-1/2 gap-2">
-            <Icon name="lock-outline" color="white" size={15} />
-            <Text className="text-[11px] text-white font-ralewayLight ">
-              Os seus dados serão protegidos.
-            </Text>
-          </View>
-        </View>
-      }
-    </RNAnimated.View>
-  );
-};
-
-const TopNavBar = ({}) => {
-  return (
-    <View
-      style={{
-        height: 55,
-        backgroundColor: '#2167ff',
-        width: '100%',
-        paddingBottom: 10,
-        justifyContent: "center",
-        alignItems: "center",
-
-      }}>
-      <Text
-        style={{
-          color: "white",
-          fontSize: 16,
-        }}
-      >Você</Text>
-    </View>
-  );
-};
 
 const ProfileScreen = () => {
   const inputRef = useRef<TextInput | null>(null);
@@ -99,13 +29,19 @@ const ProfileScreen = () => {
   const navigation = useNavigation<NavigationProps>();
   const scrollOffsetY = useRef(new RNAnimated.Value(0)).current;
 
-  const clearInputText = () => {
-    setEmailOrPhoneNumber('');
-    inputRef.current?.focus();
-  };
+
+  const handleTextInput = (text: string)=>{
+    setEmailOrPhoneNumber(text);
+  }
 
   const handleUserLogIn = () => {
+    navigation.navigate("EmailPasswordRegistration", {
+      params: {
+        email: emailOrPhoneNumber,
+      }
+    })
     Keyboard.dismiss();
+
   };
 
   return (
@@ -113,47 +49,14 @@ const ProfileScreen = () => {
       style={{
         flex: 1,
       }}>
-      <StatusBar translucent backgroundColor={'transparent'} />
+      {/* <StatusBar  backgroundColor={"transparent"} /> */}
 
-      <RNAnimated.View
-        style={{
-          // height: 55,
-          backgroundColor: '#2167ff',
-          borderBottomRightRadius: 10,
-          borderBottomLeftRadius: 10,
-          paddingBottom: 10,
-        }}>
-        <Pressable
-          onPress={() => navigation.goBack()}
-          style={{
-            // height: 55,
-            marginTop: StatusBar.currentHeight,
-            marginHorizontal: 10,
-
-            justifyContent: 'center',
-            // alignItems: "center",
-          }}>
-          <FontAwesomeIcon icon={faClose} size={25} color="white" />
-        </Pressable>
-        {
-          <View className="items-center justify-center">
-            <Text className="text-2xl text-white font-montserratBold">
-              CidAds
-            </Text>
-            <View className="flex flex-row items-center justify-center w-1/2 gap-2">
-              <Icon name="lock-outline" color="white" size={15} />
-              <Text className="text-[11px] text-white font-ralewayLight ">
-                Os seus dados serão protegidos.
-              </Text>
-            </View>
-          </View>
-        }
-      </RNAnimated.View>
+      <HeaderWithAuthBrand scrollOffsetY={scrollOffsetY} icon={faClose} />
 
       <Animated.ScrollView
-      alwaysBounceVertical={false}
-      alwaysBounceHorizontal={false}
-      bounces={false}
+        alwaysBounceVertical={false}
+        alwaysBounceHorizontal={false}
+        bounces={false}
         scrollEventThrottle={16}
         onScroll={RNAnimated.event(
           [{nativeEvent: {contentOffset: {y: scrollOffsetY}}}],
@@ -178,41 +81,16 @@ const ProfileScreen = () => {
               width: '100%',
               gap: 30,
             }}>
-            <TextInput
-              ref={inputRef}
-              onChangeText={text => setEmailOrPhoneNumber(text)}
-              value={emailOrPhoneNumber}
-              className="border border-gray-400 shadow-md text-black text-[40px]"
-              style={{
-                fontSize: emailOrPhoneNumber ? 18 : 14,
-                fontWeight: emailOrPhoneNumber ? '600' : 'normal',
-                borderRadius: 8,
-                paddingHorizontal: 10,
-                // width: "100%"
-              }}
-              placeholderTextColor={'gray'}
-              placeholder="Número de Telefone ou Endereço Electrónico"
-            />
-            {!!emailOrPhoneNumber && (
-              <Pressable
-                onPress={clearInputText}
-                style={{
-                  position: 'absolute',
-                  right: 10,
-                  top: 15,
-                  borderRadius: 50,
-                  backgroundColor: COLORS.lightgrey,
-                }}>
-                <Icon name="clear" color={COLORS.lightslategrey} size={18} />
-              </Pressable>
-            )}
-            <TouchableOpacity
-              onPress={handleUserLogIn}
-              className="bg-[#2167ff] rounded-full w-full h-12 items-center justify-center">
-              <Text className="text-[16px] text-white font-montserratBold">
-                Entrar
-              </Text>
-            </TouchableOpacity>
+              <CustomTextInput 
+                value={emailOrPhoneNumber}
+                onChangeText={handleTextInput}
+                placeholder={"Número de Telefone ou Endereço Electrónico"}
+              />
+
+              <MainButton 
+                onPress={handleUserLogIn}
+                title='Entrar'
+              />
           </View>
 
           <Pressable className="mt-4">
@@ -272,22 +150,7 @@ const ProfileScreen = () => {
             <Text className="ml-4">Continuar com X</Text>
           </TouchableOpacity>
         </View>
-        <View>
-          <Text className="text-center text-[12px] font-ralewayRegular text-gray-900">
-            Ao continuar, o utilizador concorda com os nossos{' '}
-            <Text
-              onPress={() => navigation.navigate('TermsOfUse')}
-              className="text-center text-[12px] text-[#2167ff] font-ralewayBold">
-              Termos de Utilização
-            </Text>
-            <Text className="text-center text-[12px]"> e </Text>
-            <Text
-              onPress={() => navigation.navigate('PolicyAndPrivacy')}
-              className="text-center text-[12px] text-[#2167ff] font-ralewayBold">
-              Política de Privacidade
-            </Text>
-          </Text>
-        </View>
+        <TermsAndPolicies />
       </Animated.ScrollView>
     </KeyboardAvoidingView>
   );

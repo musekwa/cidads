@@ -7,6 +7,7 @@ import LocationsScreen from '../../screens/locations/Localations';
 import ProductSearchScreen from '../../screens/product-search/ProductSearch';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import ProfileScreen from '../../screens/profile/Profile';
+import EmailPasswordRegistration from '../../screens/email-password-registration/EmailPasswordRegistration';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,7 +42,7 @@ const RootNavigation = () => {
           <Stack.Screen
             name="ProductSearch"
             component={ProductSearchScreen}
-            options={{headerShown: false}}
+            options={{headerShown: false, }}
           />
           <Stack.Screen
             options={{
@@ -50,6 +51,14 @@ const RootNavigation = () => {
             }}
             name="Profile"
             component={ProfileScreen}
+          />
+          <Stack.Screen
+            options={{
+              title: 'Você',
+              headerShown: false,
+            }}
+            name="EmailPasswordRegistration"
+            component={EmailPasswordRegistration}
           />
         </Stack.Navigator>
       </NavigationContainer>

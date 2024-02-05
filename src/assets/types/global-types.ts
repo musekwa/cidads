@@ -21,3 +21,10 @@ export interface BackNavigationProps {
     numberOfProducts: number;
   };
   
+
+  export type NavigationProps = {
+    [x: string]: any;
+    name: string;
+    merge?: boolean;
+    params?: {};
+  };
